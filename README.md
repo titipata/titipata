@@ -15,4 +15,4 @@
 
 **Stats**
 
-![](https://visitor-badge.glitch.me/badge?page_id=titipata)
+![](https://visitor-badge.glitch.me/badge?page_id=titipata.titipata)
