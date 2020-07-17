@@ -60,7 +60,7 @@ def get_svg_template():
 
     css_bar = ""
     left = 1
-    for i in range(1, 41):
+    for i in range(1, 31):
         anim = random.randint(350, 500)
         css_bar += ".bar:nth-child({})  {{{{ left: {}px; animation-duration: {}ms; }}}}".format(
             i, left, anim
@@ -78,7 +78,7 @@ def get_svg_template():
                         .playing {{ font-weight: bold; color: #fff; text-align: center; display: flex; justify-content: center; align-items: center;}}
                         .not-play {{color: #ff1616;}}
                         .artist {{ font-size: 16px; color: #b3b3b3; text-align: center; margin-top: 5px; margin-bottom: 15px;}}
-                        .song {{ font-size: 16px; color: #fff; text-align: center; margin-top: 5px; }}
+                        .song {{ font-weight: bold; font-size: 16px; color: #fff; text-align: center; margin-top: 5px; }}
                         .logo {{ margin-left: 5px; margin-top: 5px; }}
                         .cover {{ border-radius: 5px; margin-top: 9px; }}
                         #bars {{
@@ -131,11 +131,9 @@ def make_svg(data):
     global LATEST_PLAY
     template = get_svg_template()
 
-    text = "Now playing"
-    content_bar = "".join(["<div class='bar'></div>" for i in range(40)])
+    content_bar = "".join(["<div class='bar'></div>" for i in range(30)])
     if data == {} and LATEST_PLAY is not None:
         data = LATEST_PLAY
-        text = "Latest play"
         content_bar = ""
     elif data == {}:
         content = """
@@ -145,7 +143,6 @@ def make_svg(data):
         return template.format(content)
 
     content = """
-        <div class="playing">{}</div>
         <div class="song">{}</div>
         <div class="artist">{}</div>
         <div id='bars'>{}</div>
@@ -161,7 +158,6 @@ def make_svg(data):
     artist_name = item["artists"][0]["name"].replace("&", "&amp;")
     song_name = item["name"].replace("&", "&amp;")
     content_rendered = content.format(
-        text,
         song_name,
         artist_name,
         content_bar,
