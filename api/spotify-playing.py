@@ -77,8 +77,8 @@ def get_svg_template():
                         .container {{background-color: #121212; border-radius: 10px; padding: 10px 10px}}
                         .playing {{ font-weight: bold; color: #fff; text-align: center; display: flex; justify-content: center; align-items: center;}}
                         .not-play {{color: #ff1616;}}
-                        .artist {{ font-size: 16px; color: #b3b3b3; text-align: center; margin-top: 5px; margin-bottom: 15px;}}
-                        .song {{ font-weight: bold; font-size: 16px; color: #fff; text-align: center; margin-top: 5px; }}
+                        .artist {{ font-size: 14px; color: #b3b3b3; text-align: center; margin-top: 2px; margin-bottom: 15px;}}
+                        .song {{ font-weight: bold; font-size: 18px; color: #fff; text-align: center; margin-top: 5px; }}
                         .logo {{ margin-left: 5px; margin-top: 5px; }}
                         .cover {{ border-radius: 5px; margin-top: 9px; }}
                         #bars {{
@@ -131,10 +131,8 @@ def make_svg(data):
     global LATEST_PLAY
     template = get_svg_template()
 
-    content_bar = "".join(["<div class='bar'></div>" for i in range(30)])
     if data == {} and LATEST_PLAY is not None:
         data = LATEST_PLAY
-        content_bar = ""
     elif data == {}:
         content = """
             <div class="playing">🎸🥁</div>
@@ -145,7 +143,6 @@ def make_svg(data):
     content = """
         <div class="song">{}</div>
         <div class="artist">{}</div>
-        <div id='bars'>{}</div>
         <a href="{}" target="_BLANK">
             <center>
             <img src="data:image/png;base64, {}" width="300" height="300" class="cover"/>
@@ -160,7 +157,6 @@ def make_svg(data):
     content_rendered = content.format(
         song_name,
         artist_name,
-        content_bar,
         item["external_urls"]["spotify"],
         img,
     )
