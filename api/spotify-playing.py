@@ -69,16 +69,16 @@ def get_svg_template():
 
     svg = (
         """
-        <svg width="320" height="445" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <foreignObject width="320" height="445">
+        <svg width="320" height="380" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <foreignObject width="320" height="380">
                 <div xmlns="http://www.w3.org/1999/xhtml" class="container">
                     <style>
                         div {{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}}
                         .container {{background-color: #121212; border-radius: 10px; padding: 10px 10px}}
                         .playing {{ font-weight: bold; color: #fff; text-align: center; display: flex; justify-content: center; align-items: center;}}
                         .not-play {{color: #ff1616;}}
-                        .artist {{ font-size: 14px; color: #b3b3b3; text-align: center; margin-top: 2px; margin-bottom: 15px;}}
-                        .song {{ font-weight: bold; font-size: 18px; color: #fff; text-align: center; margin-top: 5px; }}
+                        .song {{ font-weight: bold; font-size: 18px; color: #fff; text-align: center; margin-top: 0px; }}
+                        .artist {{ font-size: 14px; color: #b3b3b3; text-align: center; margin-top: 2px; margin-bottom: 5px;}}
                         .logo {{ margin-left: 5px; margin-top: 5px; }}
                         .cover {{ border-radius: 5px; margin-top: 9px; }}
                         #bars {{
