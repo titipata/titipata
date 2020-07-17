@@ -77,7 +77,7 @@ def get_svg_template():
                         .container {{background-color: #121212; border-radius: 10px; padding: 10px 10px}}
                         .playing {{ font-weight: bold; color: #fff; text-align: center; display: flex; justify-content: center; align-items: center;}}
                         .not-play {{color: #ff1616;}}
-                        .song {{ font-weight: bold; font-size: 18px; color: #fff; text-align: center; margin-top: 0px; }}
+                        .song {{ font-weight: bold; font-size: 16px; color: #fff; text-align: center; margin-top: 0px; }}
                         .artist {{ font-size: 14px; color: #b3b3b3; text-align: center; margin-top: 2px; margin-bottom: 5px;}}
                         .logo {{ margin-left: 5px; margin-top: 5px; }}
                         .cover {{ border-radius: 5px; margin-top: 9px; }}
