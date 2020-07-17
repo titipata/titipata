@@ -17,6 +17,7 @@ SPOTIFY_SECRET_ID = os.getenv("SPOTIFY_SECRET_ID")
 SPOTIFY_REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN")
 SPOTIFY_URL_REFRESH_TOKEN = "https://accounts.spotify.com/api/token"
 SPOTIFY_URL_NOW_PLAYING = "https://api.spotify.com/v1/me/player/currently-playing"
+LATEST_PLAY = None
 
 app = Flask(__name__)
 
@@ -59,12 +60,12 @@ def get_svg_template():
 
     css_bar = ""
     left = 1
-    for i in range(1, 76):
+    for i in range(1, 41):
         anim = random.randint(350, 500)
         css_bar += ".bar:nth-child({})  {{{{ left: {}px; animation-duration: {}ms; }}}}".format(
             i, left, anim
         )
-        left += 4
+        left += 10
 
     svg = (
         """
@@ -74,7 +75,7 @@ def get_svg_template():
                     <style>
                         div {{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}}
                         .container {{background-color: #121212; border-radius: 10px; padding: 10px 10px}}
-                        .playing {{ font-weight: bold; color: #53b14f; text-align: center; display: flex; justify-content: center; align-items: center;}}
+                        .playing {{ font-weight: bold; color: #fff; text-align: center; display: flex; justify-content: center; align-items: center;}}
                         .not-play {{color: #ff1616;}}
                         .artist {{ font-size: 16px; color: #b3b3b3; text-align: center; margin-top: 5px; margin-bottom: 15px;}}
                         .song {{ font-size: 16px; color: #fff; text-align: center; margin-top: 5px; }}
@@ -92,7 +93,7 @@ def get_svg_template():
                             bottom: 1px;
                             height: 3px;
                             position: absolute;
-                            width: 3px;      
+                            width: 9px;      
                             animation: sound 0ms -800ms linear infinite alternate;
                         }}
 
@@ -127,10 +128,16 @@ def load_image_b64(url):
 
 
 def make_svg(data):
-
+    global LATEST_PLAY
     template = get_svg_template()
 
-    if data == {}:
+    text = "Now playing"
+    content_bar = "".join(["<div class='bar'></div>" for i in range(40)])
+    if data == {} and LATEST_PLAY is not None:
+        data = LATEST_PLAY
+        text = "Latest play"
+        content_bar = ""
+    elif data == {}:
         content = """
             <div class="playing">🎸🥁</div>
             <div class="song">Currently not playing</div>
@@ -138,7 +145,7 @@ def make_svg(data):
         return template.format(content)
 
     content = """
-        <div class="playing">🎸🥁</div>
+        <div class="playing">{}</div>
         <div class="song">{}</div>
         <div class="artist">{}</div>
         <div id='bars'>{}</div>
@@ -152,9 +159,9 @@ def make_svg(data):
     item = data["item"]
     img = load_image_b64(item["album"]["images"][1]["url"])
     artist_name = item["artists"][0]["name"].replace("&", "&amp;")
-    content_bar = "".join(["<div class='bar'></div>" for i in range(75)])
     song_name = item["name"].replace("&", "&amp;")
     content_rendered = content.format(
+        text,
         song_name,
         artist_name,
         content_bar,
@@ -167,9 +174,11 @@ def make_svg(data):
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def catch_all(path):
-
+    global LATEST_PLAY
     data = get_now_playing()
     svg = make_svg(data)
+    if data != {}:
+        LATEST_PLAY = data
     resp = Response(svg, mimetype="image/svg+xml")
     resp.headers["Cache-Control"] = "s-maxage=1"
 
