@@ -91,8 +91,8 @@ def make_svg(data):
 
     rendered_data = {
         "height": height,
-        "song_name": item["name"].replace("&", "&amp;") if item.get("name") else "",
-        "artist_name": item["artists"][0]["name"].replace("&", "&amp;") if item.get("artists") else "",
+        "song_name": item["name"] if item.get("name") else "",
+        "artist_name": item["artists"][0]["name"] if item.get("artists") else "",
         "img": load_image_b64(item["album"]["images"][1]["url"]) if item.get("album") else "",
     }
     return render_template('index.html', **rendered_data)
