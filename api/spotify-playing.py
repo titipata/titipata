@@ -1,4 +1,4 @@
-from flask import Flask, Response, jsonify
+from flask import Flask, Response, jsonify, render_template
 from base64 import b64encode
 from dotenv import load_dotenv, find_dotenv
 import requests
@@ -19,7 +19,7 @@ SPOTIFY_URL_REFRESH_TOKEN = "https://accounts.spotify.com/api/token"
 SPOTIFY_URL_NOW_PLAYING = "https://api.spotify.com/v1/me/player/currently-playing"
 LATEST_PLAY = None
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 
 def get_authorization():
@@ -27,6 +27,9 @@ def get_authorization():
 
 
 def refresh_token():
+    """
+    Get refresh token
+    """
     data = {
         "grant_type": "refresh_token",
         "refresh_token": SPOTIFY_REFRESH_TOKEN,
@@ -44,7 +47,9 @@ def refresh_token():
 
 
 def get_now_playing():
-
+    """
+    Get now playing data
+    """
     token = refresh_token()
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(SPOTIFY_URL_NOW_PLAYING, headers=headers)
@@ -56,31 +61,6 @@ def get_now_playing():
     return repsonse_json
 
 
-def get_svg_template(height=380, content=""):
-    svg = (
-        """
-        <svg width="320" height="{}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <foreignObject width="320" height="{}">
-                <div xmlns="http://www.w3.org/1999/xhtml" class="container">
-                    <style>
-                        div {{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}}
-                        .container {{background-color: #121212; border-radius: 10px; padding: 10px 10px}}
-                        .playing {{ font-weight: bold; color: #fff; text-align: center; display: flex; justify-content: center; align-items: center;}}
-                        .not-play {{color: #ff1616;}}
-                        .song {{ font-weight: bold; font-size: 16px; color: #fff; text-align: center; margin-top: 0px; }}
-                        .artist {{ font-size: 14px; color: #b3b3b3; text-align: center; margin-top: 2px; margin-bottom: 5px;}}
-                        .logo {{ margin-left: 5px; margin-top: 5px; }}
-                        .cover {{ border-radius: 5px; margin-top: 9px; }}
-                    </style>
-                    {}
-                vg</div>
-            </foreignObject>
-        </svg>
-    """.format(height, height, content)
-    )
-    return svg
-
-
 def load_image_b64(url):
     resposne = requests.get(url)
     return b64encode(resposne.content).decode("ascii")
@@ -88,39 +68,17 @@ def load_image_b64(url):
 
 def make_svg(data):
     global LATEST_PLAY
-    template = get_svg_template()
-
     if data == {} and LATEST_PLAY is not None:
         data = LATEST_PLAY
-    elif data == {}:
-        content = """
-            <div class="playing">🎸🥁</div>
-            <div class="song">Currently not playing</div>
-        """
-        template = get_svg_template(90, content)
-        return template
     else:
-        content = """
-            <div class="song">{}</div>
-            <div class="artist">{}</div>
-            <a href="{}" target="_BLANK">
-                <center>
-                <img src="data:image/png;base64, {}" width="300" height="300" class="cover"/>
-                </center>
-            </a>
-        """
         item = data["item"]
-        img = load_image_b64(item["album"]["images"][1]["url"])
-        artist_name = item["artists"][0]["name"].replace("&", "&amp;")
-        song_name = item["name"].replace("&", "&amp;")
-        content_rendered = content.format(
-            song_name,
-            artist_name,
-            item["external_urls"]["spotify"],
-            img,
-        )
-        template = get_svg_template(425, content_rendered)
-        return template
+        rendered_data = {
+            "height": 425,
+            "song_name": item["name"].replace("&", "&amp;"),
+            "artist_name": item["artists"][0]["name"].replace("&", "&amp;"),
+            "img": load_image_b64(item["album"]["images"][1]["url"]),
+        }
+        return render_template('index.html', **rendered_data)
 
 
 @app.route("/", defaults={"path": ""})
@@ -133,7 +91,6 @@ def catch_all(path):
         LATEST_PLAY = data
     resp = Response(svg, mimetype="image/svg+xml")
     resp.headers["Cache-Control"] = "s-maxage=1"
-
     return resp
 
 
