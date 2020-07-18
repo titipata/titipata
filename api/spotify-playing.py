@@ -67,18 +67,23 @@ def load_image_b64(url):
 
 
 def make_svg(data):
+    """
+    Render Flask template from
+    """
     global LATEST_PLAY
+    height = 425
     if data == {} and LATEST_PLAY is not None:
         data = LATEST_PLAY
-    else:
-        item = data["item"]
-        rendered_data = {
-            "height": 425,
-            "song_name": item["name"].replace("&", "&amp;"),
-            "artist_name": item["artists"][0]["name"].replace("&", "&amp;"),
-            "img": load_image_b64(item["album"]["images"][1]["url"]),
-        }
-        return render_template('index.html', **rendered_data)
+    elif data == {}:
+        height = 90
+    item = data.get("item", {})
+    rendered_data = {
+        "height": height,
+        "song_name": item["name"].replace("&", "&amp;") if item.get("name") else "",
+        "artist_name": item["artists"][0]["name"].replace("&", "&amp;") if item.get("artists") else "",
+        "img": load_image_b64(item["album"]["images"][1]["url"]) if item.get("album") else "",
+    }
+    return render_template('index.html', **rendered_data)
 
 
 @app.route("/", defaults={"path": ""})
