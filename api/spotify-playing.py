@@ -56,21 +56,11 @@ def get_now_playing():
     return repsonse_json
 
 
-def get_svg_template():
-
-    css_bar = ""
-    left = 1
-    for i in range(1, 31):
-        anim = random.randint(350, 500)
-        css_bar += ".bar:nth-child({})  {{{{ left: {}px; animation-duration: {}ms; }}}}".format(
-            i, left, anim
-        )
-        left += 10
-
+def get_svg_template(height=380, content=""):
     svg = (
         """
-        <svg width="320" height="380" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <foreignObject width="320" height="380">
+        <svg width="320" height="{}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <foreignObject width="320" height="{}">
                 <div xmlns="http://www.w3.org/1999/xhtml" class="container">
                     <style>
                         div {{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}}
@@ -81,43 +71,12 @@ def get_svg_template():
                         .artist {{ font-size: 14px; color: #b3b3b3; text-align: center; margin-top: 2px; margin-bottom: 5px;}}
                         .logo {{ margin-left: 5px; margin-top: 5px; }}
                         .cover {{ border-radius: 5px; margin-top: 9px; }}
-                        #bars {{
-                            height: 30px;
-                            margin: -20px 0 0 0px;
-                            position: absolute;
-                            width: 40px;
-                        }}
-
-                        .bar {{
-                            background: #53b14f;
-                            bottom: 1px;
-                            height: 3px;
-                            position: absolute;
-                            width: 9px;      
-                            animation: sound 0ms -800ms linear infinite alternate;
-                        }}
-
-                        @keyframes sound {{
-                            0% {{
-                            opacity: .35;
-                                height: 3px; 
-                            }}
-                            100% {{
-                                opacity: 1;       
-                                height: 28px;        
-                            }}
-                        }}
-
-                        """
-        + css_bar
-        + """
-
                     </style>
                     {}
-                </div>
+                vg</div>
             </foreignObject>
         </svg>
-    """
+    """.format(height, height, content)
     )
     return svg
 
@@ -138,29 +97,30 @@ def make_svg(data):
             <div class="playing">🎸🥁</div>
             <div class="song">Currently not playing</div>
         """
-        return template.format(content)
-
-    content = """
-        <div class="song">{}</div>
-        <div class="artist">{}</div>
-        <a href="{}" target="_BLANK">
-            <center>
-            <img src="data:image/png;base64, {}" width="300" height="300" class="cover"/>
-            </center>
-        </a>
-    """
-
-    item = data["item"]
-    img = load_image_b64(item["album"]["images"][1]["url"])
-    artist_name = item["artists"][0]["name"].replace("&", "&amp;")
-    song_name = item["name"].replace("&", "&amp;")
-    content_rendered = content.format(
-        song_name,
-        artist_name,
-        item["external_urls"]["spotify"],
-        img,
-    )
-    return template.format(content_rendered)
+        template = get_svg_template(90, content)
+        return template
+    else:
+        content = """
+            <div class="song">{}</div>
+            <div class="artist">{}</div>
+            <a href="{}" target="_BLANK">
+                <center>
+                <img src="data:image/png;base64, {}" width="300" height="300" class="cover"/>
+                </center>
+            </a>
+        """
+        item = data["item"]
+        img = load_image_b64(item["album"]["images"][1]["url"])
+        artist_name = item["artists"][0]["name"].replace("&", "&amp;")
+        song_name = item["name"].replace("&", "&amp;")
+        content_rendered = content.format(
+            song_name,
+            artist_name,
+            item["external_urls"]["spotify"],
+            img,
+        )
+        template = get_svg_template(425, content_rendered)
+        return template
 
 
 @app.route("/", defaults={"path": ""})
