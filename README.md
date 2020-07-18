@@ -13,6 +13,6 @@
 <code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png"></code>
 <code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png"></code>
 
-<img src="https://media.giphy.com/media/4oMoIbIQrvCjm/giphy.gif" width="50"> **Listening to:**
+<img src="https://media.giphy.com/media/4oMoIbIQrvCjm/giphy.gif" width="50"> **Listening on <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" width="24">:**
 
 ![Spotify](https://titipata-three.vercel.app/api/spotify-playing)
