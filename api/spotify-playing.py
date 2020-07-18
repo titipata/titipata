@@ -17,6 +17,7 @@ SPOTIFY_SECRET_ID = os.getenv("SPOTIFY_SECRET_ID")
 SPOTIFY_REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN")
 SPOTIFY_URL_REFRESH_TOKEN = "https://accounts.spotify.com/api/token"
 SPOTIFY_URL_NOW_PLAYING = "https://api.spotify.com/v1/me/player/currently-playing"
+SPOTIFY_URL_RECENTLY_PLAY = "https://api.spotify.com/v1/me/player/recently-played?limit=10"
 LATEST_PLAY = None
 
 app = Flask(__name__, template_folder='templates')
@@ -53,10 +54,21 @@ def get_now_playing():
     token = refresh_token()
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(SPOTIFY_URL_NOW_PLAYING, headers=headers)
-
     if response.status_code == 204:
         return {}
+    repsonse_json = response.json()
+    return repsonse_json
 
+
+def get_recently_play():
+    """
+    Get recently played song
+    """
+    token = refresh_token()
+    headers = {"Authorization": f"Bearer {token}"}
+    response = requests.get(SPOTIFY_URL_RECENTLY_PLAY, headers=headers)
+    if response.status_code == 204:
+        return {}
     repsonse_json = response.json()
     return repsonse_json
 
@@ -70,13 +82,13 @@ def make_svg(data):
     """
     Render Flask template from
     """
-    global LATEST_PLAY
     height = 425
-    if data == {} and LATEST_PLAY is not None:
-        data = LATEST_PLAY
-    elif data == {}:
-        height = 90
-    item = data.get("item", {})
+    if data == {}:
+        recent_plays = get_recently_play()
+        item = random.choice(recent_plays['items'])['track']
+    else:
+        item = data.get("item", {})
+
     rendered_data = {
         "height": height,
         "song_name": item["name"].replace("&", "&amp;") if item.get("name") else "",
