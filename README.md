@@ -1,8 +1,9 @@
 ### Hi there 👋
 
 - 😎 My name is Titipat Achakulvisut
-- 🔭 Currently a PhD student at Konrad Kording lab, University of Pennsylvania
-- 🌓 Research interests: Metascience, Science of Science, Applied NLP
+- 🔬 Incoming lecturer/assistant professor at Mahidol University, Thailand
+- 🔭 Formerly a PhD student at Konrad Kording lab, University of Pennsylvania
+- 🌓 Research interests: Metascience, Science of Science, Applied ML and NLP
 - 💬 Open source contributor, writing blog posts at [tupleblog.github.io](http://tupleblog.github.io/), [Stack Overflow](https://stackoverflow.com/users/3626961/titipata)
 - 🌦 Philadelphia / 🇹🇭 Bangkok
 
