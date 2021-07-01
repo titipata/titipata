@@ -1,7 +1,7 @@
 ### Hi there 👋
 
 - 😎 My name is Titipat Achakulvisut
-- 🔬 Incoming lecturer/assistant professor at Mahidol University, Thailand
+- 🔬 Incoming lecturer/assistant professor at Mahidol University, Thailand, see [lab website](https://bad-lab-website.vercel.app/)
 - 🔭 Formerly a PhD student at Konrad Kording lab, University of Pennsylvania
 - 🌓 Research interests: Metascience, Science of Science, Applied ML and NLP
 - 💬 Open source contributor, writing blog posts at [tupleblog.github.io](http://tupleblog.github.io/), [Stack Overflow](https://stackoverflow.com/users/3626961/titipata)
@@ -16,4 +16,4 @@
 
 <img src="https://media.giphy.com/media/4oMoIbIQrvCjm/giphy.gif" width="50"> **Listening on <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" width="24">:**
 
-![Spotify](https://titipata-three.vercel.app/api/spotify-playing)
+# ![Spotify](https://titipata-three.vercel.app/api/spotify-playing)
