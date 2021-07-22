@@ -1,7 +1,7 @@
 ### Hi there 👋
 
 - 😎 My name is Titipat Achakulvisut
-- 🔬 Incoming lecturer/assistant professor at Mahidol University, Thailand, see [lab website](https://bad-lab-website.vercel.app/)
+- 🔬 Incoming lecturer (tenure track) at Mahidol University, Thailand, see [lab website](https://bad-lab-website.vercel.app/)
 - 🔭 Formerly a PhD student at Konrad Kording lab, University of Pennsylvania
 - 🌓 Research interests: Metascience, Science of Science, Applied ML and NLP
 - 💬 Open source contributor, writing blog posts at [tupleblog.github.io](http://tupleblog.github.io/), [Stack Overflow](https://stackoverflow.com/users/3626961/titipata)
