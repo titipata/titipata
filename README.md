@@ -1,11 +1,11 @@
 ### Hi there 👋
 
 - 😎 My name is Titipat Achakulvisut
-- 🔬 Incoming lecturer (tenure track) at Mahidol University, Thailand, see [lab website](https://badlab.vercel.app/)
-- 🔭 Formerly a PhD student at Konrad Kording lab, University of Pennsylvania
-- 🌓 Research interests: Metascience, Science of Science, Applied ML and NLP
-- 💬 Open source contributor, writing blog posts at [tupleblog.github.io](http://tupleblog.github.io/), [Stack Overflow](https://stackoverflow.com/users/3626961/titipata)
-- 🌦 Philadelphia / 🇹🇭 Bangkok
+- 🔬 Incoming lecturer (tenure track) at Mahidol University, Thailand, see our [lab website](https://badlab.vercel.app/)
+- 🔭 Formerly a PhD student at [Konrad Kording lab](http://kordinglab.com/) at University of Pennsylvania
+- 🌓 Research interests: Metascience, Science of Science, Natural Language Processing, Applied ML and NLP
+- 💬 Open source contributor, writing blog posts at [tupleblog.github.io](http://tupleblog.github.io/), [Stack Overflow](https://stackoverflow.com/users/3626961/titipata) contributor
+- 🇹🇭 Bangkok / 🌦 Previous cities: Philadelphia, Seattle, Chicago
 
 **Languages and Tools:**  
 
